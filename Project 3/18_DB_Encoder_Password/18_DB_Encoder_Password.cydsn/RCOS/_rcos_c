@@ -1,0 +1,33 @@
+/** @file       rcos.c
+ *  @brief      RCoS+ main file
+ *  @copyright  (c) %YEAR%-Arcelik - All Rights Reserved
+ *              Permission to use, reproduce, copy, prepare derivative works,
+ *              modify, distribute, perform, display or sell this software and/or
+ *              its documentation for any purpose is prohibited without the express
+ *              written consent of Arcelik A.S.
+ *  @author     %AUTHOR%
+ *  @date       %DATE%
+ */
+#define FILE_RCOS_C
+
+#include "rcos.h"
+
+#define DEBUG_FILE_NAME "rcos"
+
+// #define DEBUG_PORT_
+// DEBUG_START(0)
+
+CORE_EVENTQUEUE_SIZE(%EVENTQUEUE_SIZE%)
+%DEBUG_DEV_LINE%
+CORE_TICK_DEFAULT(%TICK_ARGS%)
+CORE_WDT_DEFAULT(%WDT_ARGS%)
+
+%OBJECTS_CREATE%
+void rcosMainLoop(void)
+{
+    platformInit();
+    coreInit();
+
+%OBJECTS_INIT%
+    coreRun();
+}

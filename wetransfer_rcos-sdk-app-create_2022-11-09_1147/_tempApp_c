@@ -1,0 +1,90 @@
+/** @file       %FILENAMELC%.c
+ *  @brief      %FILENAMEUC% application program file
+ *  @copyright  (c) %YEAR%-Arcelik - All Rights Reserved
+ *              Permission to use, reproduce, copy, prepare derivative works,
+ *              modify, distribute, perform, display or sell this software and/or
+ *              its documentation for any purpose is prohibited without the express
+ *              written consent of Arcelik A.S.
+ *  @author     %AUTHOR%
+ *  @date       %DATE%
+ */
+#define FILE_%FILENAMEUC%_C
+
+#include "%FILENAMELC%.h"
+
+#define DEBUG_FILE_NAME "%DEBUG_NAME%"
+%DEBUG_PORTS%
+// #define DEBUG_PORT_
+// DEBUG_START(0)
+
+/**
+ *  @addtogroup %FILENAMEUC%
+ *  @{
+ */
+
+static PT_THREAD(%APPNAME%Thread)
+{
+    ts%APPNAMEPC%Params *params       = process->parameters;
+    const ts%APPNAMEPC%Consts *consts = process->constants;
+
+    PT_BEGIN();
+
+    for (;;)
+    {
+        PT_WHILE();
+        PT_YIELD();
+    }
+
+    PT_END();
+}
+
+static PROCESS_HANDLER_PROTO(%APPNAME%Handler);
+
+/// @brief  Initialization function of %APPNAME%
+PROCESS_INIT_PROTO(%APPNAME%Init)
+{
+    ts%APPNAMEPC%Params *params       = process->parameters;
+    const ts%APPNAMEPC%Consts *consts = process->constants;
+
+    UNUSED(params); // REMOVE IF USED
+    UNUSED(consts); // REMOVE IF USED
+
+    PROCESS_STATE_CHANGE(process, %APPNAME%Handler);
+    threadStart(process, %APPNAME%Thread);
+    process->initialized = 1; // If process needs other checks, set this another time
+}
+
+/// @brief  Deinitialization function of %APPNAME%
+PROCESS_DEINIT_PROTO(%APPNAME%Deinit)
+{
+    ts%APPNAMEPC%Params *params       = process->parameters;
+    const ts%APPNAMEPC%Consts *consts = process->constants;
+
+    UNUSED(params); // REMOVE IF USED
+    UNUSED(consts); // REMOVE IF USED
+
+    PROCESS_STATE_CHANGE(process, NULL);
+    threadStop(process, process->threadFunction);
+    process->initialized = 0; // If process needs other checks, clear this another time
+}
+
+/// @brief  Event handler function of %APPNAME%
+static PROCESS_HANDLER_PROTO(%APPNAME%Handler)
+{
+    ts%APPNAMEPC%Params *params       = process->parameters;
+    const ts%APPNAMEPC%Consts *consts = process->constants;
+
+    UNUSED(params); // REMOVE IF USED
+    UNUSED(consts); // REMOVE IF USED
+
+    switch (eventCurrent.event)
+    {
+        case EVENT_NONE: // FILL WITH NEW EVENTS
+            break;
+
+        default:
+            break;
+    }
+}
+
+/** @} */
